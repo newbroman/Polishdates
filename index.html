@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Polish Dates Master Pro</title>
-    <link rel="stylesheet" href="styles.css?v=1.1">
+    <title>Learn to Say Polish Dates</title>
+    <link rel="stylesheet" href="styles.css?v=1.2">
 </head>
 <body onload="init()">
 <div class="container">
+    <h1 style="font-size: 1.2rem; margin-bottom: 15px; color: var(--accent);">Learn to Say Polish Dates</h1>
+    
     <div class="season-bar">
         <span id="s-emo">❄️</span> <span id="s-nam">Zima</span>
     </div>
@@ -26,21 +28,9 @@
     </div>
 
     <div class="picker-container">
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjD(1)">+</button>
-            <div class="v-disp" id="dv">01</div>
-            <button class="p-btn" onclick="adjD(-1)">-</button>
-        </div>
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjM(1)">+</button>
-            <div class="v-disp" id="mv">01</div>
-            <button class="p-btn" onclick="adjM(-1)">-</button>
-        </div>
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjY(1)">+</button>
-            <div class="v-disp" id="yv">2026</div>
-            <button class="p-btn" onclick="adjY(-1)">-</button>
-        </div>
+        <div class="picker-col"><button class="p-btn" onclick="adjD(1)">+</button><div class="v-disp" id="dv">01</div><button class="p-btn" onclick="adjD(-1)">-</button></div>
+        <div class="picker-col"><button class="p-btn" onclick="adjM(1)">+</button><div class="v-disp" id="mv">01</div><button class="p-btn" onclick="adjM(-1)">-</button></div>
+        <div class="picker-col"><button class="p-btn" onclick="adjY(1)">+</button><div class="v-disp" id="yv">2026</div><button class="p-btn" onclick="adjY(-1)">-</button></div>
     </div>
 
     <div class="display-area">
@@ -67,6 +57,6 @@
     <div id="cultContent"></div>
 </div>
 
-<script src="script.js?v=1.1"></script>
+<script src="script.js?v=1.2"></script>
 </body>
 </html>

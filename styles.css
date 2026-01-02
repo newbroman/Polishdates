@@ -14,7 +14,8 @@ body {
 
 .container { 
     background: var(--card); padding: 1rem; border-radius: 20px; 
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 340px; text-align: center; 
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 340px; 
+    text-align: center; min-height: 600px; /* Increased to ensure buttons show */
 }
 
 .season-bar { 

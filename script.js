@@ -99,7 +99,47 @@ function roll(){y=2026; m=Math.floor(Math.random()*12); d=Math.floor(Math.random
 function reveal(){iR=true; update();}
 function toggleQuiz(){iQ=!iQ; iR=!iQ; document.getElementById('q-tog').innerText=iQ?"Quiz: ON":"Quiz: OFF"; update();}
 function toggleDark(){document.body.classList.toggle('dark-mode');}
-function toggleLang(){ln=ln=='EN'?'PL':'EN'; update();}
+
+function toggleLang() {
+    ln = (ln === 'EN' ? 'PL' : 'EN');
+    // We call update, but we temporarily disable the auto-speech
+    let tempAuto = iR;
+    iR = false; 
+    update();
+    iR = tempAuto; 
+}
+
+function update() {
+    let dt=new Date(y,m,d), dw=dt.getDay(), hol=getH(d,m), sea=getS(m);
+    document.getElementById('cal-h').innerText = mN[m].toUpperCase();
+    document.getElementById('cal-h').className = hol ? "cal-header is-holiday" : "cal-header";
+    document.getElementById('cal-b').innerText = dW[dw];
+    document.getElementById('cal-f').innerText = dO[d];
+    document.getElementById('dv').innerText = d.toString().padStart(2,'0');
+    document.getElementById('mv').innerText = (m+1).toString().padStart(2,'0');
+    document.getElementById('yv').innerText = y;
+    document.getElementById('s-emo').innerText = sea.e;
+    document.getElementById('s-nam').innerText = sea.n;
+    document.getElementById('hol-t').innerText = hol ? `★ ${hol} ★` : "";
+    
+    // Always calculate the Polish text for the voice engine even if UI is in Quiz mode
+    let polStr = `${dW[dw]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
+    let engStr = `${dE[dw]}, ${d} ${mN[m]} ${y}`;
+    
+    const pt = document.getElementById('pol-t'), et = document.getElementById('eng-t'), rb = document.getElementById('rev-b');
+    
+    if(iQ && !iR) { 
+        pt.innerText = ln=='EN'?"How to say?":"Jak to powiedzieć?";
+        et.innerText="";
+        rb.style.display="block";
+    } else { 
+        pt.innerText = polStr;
+        et.innerText = engStr;
+        rb.style.display="none";
+        // Only speak automatically if we are NOT just toggling the language label
+        if(iR) speak(1);
+    }
+}
 
 function speak(rate) {
     window.speechSynthesis.cancel();

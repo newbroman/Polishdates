@@ -1,9 +1,12 @@
-let d=1, m=0, y=2026, iQ=false, iR=true, ln='EN';
-const mN=["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"];
-const mG=["stycznia","lutego","marca","kwietnia","maja","czerwca","lipca","sierpnia","września","października","listopada","grudnia"];
-const dW=["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
-const dE=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const dO=["","pierwszy","drugi","trzeci","czwarty","piąty","szósty","siódmy","ósmy","dziewiąty","dziesiąty","jedenasty","dwunasty","trzynasty","czternasty","piętnasty","szesnasty","siedemnasty","osiemnasty","dziewiętnasty","dwudziesty","dwudziesty pierwszy","dwudziesty drugi","dwudziesty trzeci","dwudziesty czwarty","dwudziesty piąty","dwudziesty szósty","dwudziesty siódmy","dwudziesty ósmy","dwudziesty dziewiąty","trzydziesty","trzydziesty pierwszy"];
+// Global State
+let d = 1, m = 0, y = 2026, iQ = false, iR = true, ln = 'EN';
+
+// Data Arrays
+const mN = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
+const mG = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
+const dW = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+const dE = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const dO = ["", "pierwszy", "drugi", "trzeci", "czwarty", "piąty", "szósty", "siódmy", "ósmy", "dziewiąty", "dziesiąty", "jedenasty", "dwunasty", "trzynasty", "czternasty", "piętnasty", "szesnasty", "siedemnasty", "osiemnasty", "dziewiętnasty", "dwudziesty", "dwudziesty pierwszy", "dwudziesty drugi", "dwudziesty trzeci", "dwudziesty czwarty", "dwudziesty piąty", "dwudziesty szósty", "dwudziesty siódmy", "dwudziesty ósmy", "dwudziesty dziewiąty", "trzydziesty", "trzydziesty pierwszy"];
 
 const trans = {
     'EN': { 'title': 'Learn to Say Polish Dates', 'actual': 'TODAY', 'random': 'RANDOM', 'reveal': 'REVEAL', 'repeat': '🔊 REPEAT', 'slow': '🐢 SLOW', 'quiz': 'Quiz: ', 'cult': '🏛️ Culture', 'close': 'CLOSE', 'qText': 'How to say?' },
@@ -41,6 +44,8 @@ const cultData = {
     }
 };
 
+// --- Logic Functions ---
+
 function getEaster(year) {
     let a = year % 19, b = Math.floor(year / 100), c = year % 100,
         d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25),
@@ -70,15 +75,16 @@ function spellY(yr) {
     let c=Math.floor(yr/100), l=yr%100, r=p[c]+" "; if(l<10) r+=o[l]; else if(l<20) r+=ts[l-10]; else r+=t[Math.floor(l/10)]+(l%10>0?" "+o[l%10]:""); return r;
 }
 
+// --- UI Rendering ---
+
 function renderGrid() {
     const grid = document.getElementById('calendar-grid');
     const display = document.getElementById('grid-month-yr');
     grid.innerHTML = "";
     display.innerText = `${mN[m]} ${y}`;
     
-    // Calculate first day of month (Monday=0 style for grid)
     let firstDay = new Date(y, m, 1).getDay();
-    let shift = (firstDay === 0) ? 6 : firstDay - 1; // Standardize to Monday start
+    let shift = (firstDay === 0) ? 6 : firstDay - 1; // Standardize to Monday-start
     let daysInMonth = new Date(y, m + 1, 0).getDate();
     
     for (let i = 0; i < shift; i++) {
@@ -91,17 +97,26 @@ function renderGrid() {
         let dayEl = document.createElement('div');
         dayEl.className = "grid-day";
         dayEl.innerText = day;
+        
+        if (getH(day, m, y)) dayEl.classList.add('is-holiday');
         if (day === d) dayEl.classList.add('active');
+        
         let now = new Date();
-        if (day === now.getDate() && m === now.getMonth() && y === now.getFullYear()) dayEl.classList.add('today');
+        if (day === now.getDate() && m === now.getMonth() && y === now.getFullYear()) {
+            dayEl.classList.add('today');
+        }
+        
         dayEl.onclick = () => { d = day; iR = !iQ; update(); };
         grid.appendChild(dayEl);
     }
 }
 
 function update(isAutoSpeak = true) {
-    let dt=new Date(y,m,d), dw=dt.getDay(), hol=getH(d,m,y), sea={n:"Zima",e:"❄️"};
-    if(m>=2&&m<=4) sea={n:"Wiosna",e:"🐇"}; else if(m>=5&&m<=7) sea={n:"Lato",e:"🌞"}; else if(m>=8&&m<=10) sea={n:"Jesień",e:"🍂"};
+    let dt = new Date(y, m, d), dw = dt.getDay(), hol = getH(d, m, y), sea = { n: "Zima", e: "❄️" };
+    if (m >= 2 && m <= 4) sea = { n: "Wiosna", e: "🐇" }; 
+    else if (m >= 5 && m <= 7) sea = { n: "Lato", e: "🌞" }; 
+    else if (m >= 8 && m <= 10) sea = { n: "Jesień", e: "🍂" };
+    
     const t = trans[ln];
 
     document.getElementById('main-title').innerText = t.title;
@@ -125,14 +140,37 @@ function update(isAutoSpeak = true) {
     let eng = `${dE[dw]}, ${d} ${mN[m]} ${y}`;
     
     const pt = document.getElementById('pol-t'), et = document.getElementById('eng-t'), rb = document.getElementById('rev-b');
-    if(iQ && !iR) { pt.innerText = t.qText; et.innerText=""; rb.style.display="block"; } 
-    else { pt.innerText=pol; et.innerText=eng; rb.style.display="none"; if(iR && isAutoSpeak) speak(1); }
+    if (iQ && !iR) { 
+        pt.innerText = t.qText; et.innerText = ""; rb.style.display = "block"; 
+    } else { 
+        pt.innerText = pol; et.innerText = eng; rb.style.display = "none"; 
+        if (iR && isAutoSpeak) speak(1); 
+    }
     renderGrid();
 }
 
-function adjM(v) { m += v; if (m > 11) { m = 0; y++; } else if (m < 0) { m = 11; y--; } let max = new Date(y, m + 1, 0).getDate(); if (d > max) d = max; update(); }
-function setToday() { let n = new Date(); d = n.getDate(); m = n.getMonth(); y = n.getFullYear(); iR = !iQ; update(); }
-function roll() { y = 2026; m = Math.floor(Math.random() * 12); d = Math.floor(Math.random() * 28) + 1; iR = !iQ; update(); }
+// --- Interaction Functions ---
+
+function adjM(v) { 
+    m += v; 
+    if (m > 11) { m = 0; y++; } else if (m < 0) { m = 11; y--; } 
+    let max = new Date(y, m + 1, 0).getDate(); 
+    if (d > max) d = max; 
+    update(); 
+}
+
+function setToday() { 
+    let n = new Date(); 
+    d = n.getDate(); m = n.getMonth(); y = n.getFullYear(); 
+    iR = !iQ; update(); 
+}
+
+function roll() { 
+    y = 2026; m = Math.floor(Math.random() * 12); 
+    d = Math.floor(Math.random() * 28) + 1; 
+    iR = !iQ; update(); 
+}
+
 function reveal() { iR = true; update(true); }
 function toggleQuiz() { iQ = !iQ; iR = !iQ; update(false); }
 function toggleDark() { document.body.classList.toggle('dark-mode'); }
@@ -141,17 +179,17 @@ function toggleLang() { ln = ln === 'EN' ? 'PL' : 'EN'; update(false); }
 function showCulture() {
     const hol = getH(d, m, y);
     let html = `<div class="cult-card"><h3>📅 Month: ${mN[m]}</h3><p>${cultData.months[m]}</p></div>`;
-    if(hol) { html += `<div class="cult-card" style="border-left-color:var(--holiday)"><h3>✨ Holiday: ${hol}</h3><p>${cultData.holidays[hol] || "A significant day in Poland."}</p></div>`; }
+    if (hol) { html += `<div class="cult-card" style="border-left-color:var(--holiday)"><h3>✨ Holiday: ${hol}</h3><p>${cultData.holidays[hol] || "A significant day in Poland."}</p></div>`; }
     html += `<div class="cult-card"><h3>🎓 Grammar Tip</h3><p>Dates use the <b>Genitive case</b>. It's like saying 'the 1st <b>of</b> May'.</p></div>`;
     document.getElementById('cultContent').innerHTML = html;
-    document.getElementById('cultModal').style.display='block';
+    document.getElementById('cultModal').style.display = 'block';
 }
 
-function closeCulture() { document.getElementById('cultModal').style.display='none'; }
+function closeCulture() { document.getElementById('cultModal').style.display = 'none'; }
 
 function speak(rate) {
     window.speechSynthesis.cancel();
-    let text = `${dW[new Date(y,m,d).getDay()]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
+    let text = `${dW[new Date(y, m, d).getDay()]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'pl-PL';
     msg.rate = rate;

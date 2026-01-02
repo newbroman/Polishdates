@@ -11,6 +11,10 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
     color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    overscroll-behavior-y: contain;
 }
 .container { background: var(--card); padding: 10px; border-radius: 20px; width: 300px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); }
 
@@ -25,14 +29,14 @@ body {
 #s-emo { font-size: 2rem; display: block; margin-bottom: 2px; }
 #s-nam { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
 
-/* Calendar Card - Now Dark Mode Compatible */
+/* Calendar Card */
 .calendar-card { width: 100px; height: 100px; background: var(--grid-bg); border-radius: 10px; border: 3px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
 .cal-header { height: 22px; background: var(--accent); color: white; line-height: 22px; font-weight: bold; font-size: 0.65rem; text-transform: uppercase;}
 .cal-header.is-holiday { background: var(--holiday); }
 .cal-body { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; color: var(--text); }
 .cal-footer { height: 18px; font-size: 0.55rem; color: var(--text); border-top: 1px solid var(--border); line-height: 18px; font-weight: bold; background: var(--btn-sub); text-transform: uppercase;}
 
-/* Grid - Now Dark Mode Compatible */
+/* Grid */
 .grid-container { background: var(--grid-bg); border-radius: 10px; border: 2px solid var(--border); margin-bottom: 8px; padding: 6px; }
 .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-weight: 800; font-size: 0.8rem; }
 .nav-btn { width: 26px; padding: 3px; background: var(--btn-sub); border-radius: 4px; cursor: pointer; border: none; color: var(--text); }
@@ -60,7 +64,7 @@ button { cursor: pointer; border-radius: 8px; border: none; padding: 8px; font-w
 .btn-sub { background: var(--btn-sub); color: var(--text); }
 .btn-cult { background: var(--gold); color: white; }
 
-/* Modal */
+/* Modal Fixed Position */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--card); z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto; color: var(--text); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
 .close-btn { background: var(--holiday); color: white; width: auto !important; padding: 5px 12px; }

@@ -74,7 +74,6 @@ function update(isAutoSpeak = true) {
     let dt=new Date(y,m,d), dw=dt.getDay(), hol=getH(d,m), sea=getS(m);
     const t = trans[ln];
 
-    // UI Translation
     document.getElementById('main-title').innerText = t.title;
     document.getElementById('btn-actual').innerText = t.actual;
     document.getElementById('btn-random').innerText = t.random;
@@ -84,13 +83,11 @@ function update(isAutoSpeak = true) {
     document.getElementById('btn-cult-text').innerText = t.cult;
     document.getElementById('btn-close').innerText = t.close;
 
-    // Calendar Layout
     document.getElementById('cal-h').innerText = mN[m].toUpperCase();
     document.getElementById('cal-h').className = hol ? "cal-header is-holiday" : "cal-header";
     document.getElementById('cal-b').innerText = d;
     document.getElementById('cal-f').innerText = dW[dw].toUpperCase();
 
-    // Picker values
     document.getElementById('dv').innerText = d.toString().padStart(2,'0');
     document.getElementById('mv').innerText = (m+1).toString().padStart(2,'0');
     document.getElementById('yv').innerText = y;
@@ -126,7 +123,6 @@ function toggleLang(){ln=ln=='EN'?'PL':'EN'; update(false);}
 
 function speak(rate) {
     window.speechSynthesis.cancel();
-    // Get the actual polish text for speech, even if in quiz mode
     let dt=new Date(y,m,d), dw=dt.getDay();
     let text = `${dW[dw]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
     const msg = new SpeechSynthesisUtterance(text);

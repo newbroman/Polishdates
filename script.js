@@ -5,7 +5,17 @@ const dW=["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","So
 const dE=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const dO=["","pierwszy","drugi","trzeci","czwarty","piąty","szósty","siódmy","ósmy","dziewiąty","dziesiąty","jedenasty","dwunasty","trzynasty","czternasty","piętnasty","szesnasty","siedemnasty","osiemnasty","dziewiętnasty","dwudziesty","dwudziesty pierwszy","dwudziesty drugi","dwudziesty trzeci","dwudziesty czwarty","dwudziesty piąty","dwudziesty szósty","dwudziesty siódmy","dwudziesty ósmy","dwudziesty dziewiąty","trzydziesty","trzydziesty pierwszy"];
 
-// Comprehensive Cultural Data
+const trans = {
+    'EN': {
+        'title': 'Learn to Say Polish Dates', 'actual': 'TODAY', 'random': 'RANDOM DATE', 'reveal': 'REVEAL ANSWER', 
+        'repeat': '🔊 REPEAT', 'slow': '🐢 SLOW', 'quiz': 'Quiz: ', 'cult': '🏛️ Culture', 'close': 'CLOSE', 'qText': 'How to say?'
+    },
+    'PL': {
+        'title': 'Nauka Polskich Dat', 'actual': 'DZISIAJ', 'random': 'LOSUJ DATĘ', 'reveal': 'POKAŻ ODPOWIEDŹ', 
+        'repeat': '🔊 POWTÓRZ', 'slow': '🐢 WOLNIEJ', 'quiz': 'Quiz: ', 'cult': '🏛️ Kultura', 'close': 'ZAMKNIJ', 'qText': 'Jak to powiedzieć?'
+    }
+};
+
 const cultData = {
     months: {
         0: "Styczeń: From 'stykać' (to meet). It marks the meeting of the old and new year.",
@@ -35,9 +45,7 @@ const cultData = {
 function showCulture() {
     const hol = getH(d, m);
     let html = `<div class="cult-card"><h3>📅 Month: ${mN[m]}</h3><p>${cultData.months[m]}</p></div>`;
-    if(hol) {
-        html += `<div class="cult-card" style="border-left-color:var(--holiday)"><h3>✨ Holiday: ${hol}</h3><p>${cultData.holidays[hol] || "A significant day in the Polish calendar."}</p></div>`;
-    }
+    if(hol) { html += `<div class="cult-card" style="border-left-color:var(--holiday)"><h3>✨ Holiday: ${hol}</h3><p>${cultData.holidays[hol] || "A significant day."}</p></div>`; }
     html += `<div class="cult-card"><h3>🎓 Grammar Spotlight</h3><p>Notice that we say <b>'Pierwszego Maja'</b> (Genitive) rather than <b>'Pierwszy Maj'</b> (Nominative).</p></div>`;
     document.getElementById('cultContent').innerHTML = html;
     document.getElementById('cultModal').style.display='block';
@@ -62,12 +70,27 @@ function spellY(yr) {
     let c=Math.floor(yr/100), l=yr%100, r=p[c]+" "; if(l<10) r+=o[l]; else if(l<20) r+=ts[l-10]; else r+=t[Math.floor(l/10)]+(l%10>0?" "+o[l%10]:""); return r;
 }
 
-function update() {
+function update(isAutoSpeak = true) {
     let dt=new Date(y,m,d), dw=dt.getDay(), hol=getH(d,m), sea=getS(m);
+    const t = trans[ln];
+
+    // UI Translation
+    document.getElementById('main-title').innerText = t.title;
+    document.getElementById('btn-actual').innerText = t.actual;
+    document.getElementById('btn-random').innerText = t.random;
+    document.getElementById('btn-repeat').innerText = t.repeat;
+    document.getElementById('btn-slow').innerText = t.slow;
+    document.getElementById('q-tog').innerText = t.quiz + (iQ ? "ON" : "OFF");
+    document.getElementById('btn-cult-text').innerText = t.cult;
+    document.getElementById('btn-close').innerText = t.close;
+
+    // Calendar Layout
     document.getElementById('cal-h').innerText = mN[m].toUpperCase();
     document.getElementById('cal-h').className = hol ? "cal-header is-holiday" : "cal-header";
-    document.getElementById('cal-b').innerText = dW[dw];
-    document.getElementById('cal-f').innerText = dO[d];
+    document.getElementById('cal-b').innerText = d;
+    document.getElementById('cal-f').innerText = dW[dw].toUpperCase();
+
+    // Picker values
     document.getElementById('dv').innerText = d.toString().padStart(2,'0');
     document.getElementById('mv').innerText = (m+1).toString().padStart(2,'0');
     document.getElementById('yv').innerText = y;
@@ -80,14 +103,14 @@ function update() {
     
     const pt = document.getElementById('pol-t'), et = document.getElementById('eng-t'), rb = document.getElementById('rev-b');
     if(iQ && !iR) { 
-        pt.innerText = ln=='EN'?"How to say?":"Jak to powiedzieć?";
+        pt.innerText = t.qText;
         et.innerText="";
         rb.style.display="block";
     } else { 
         pt.innerText=pol;
         et.innerText=eng;
         rb.style.display="none";
-        if(iR) speak(1);
+        if(iR && isAutoSpeak) speak(1);
     }
 }
 
@@ -96,55 +119,16 @@ function adjM(v){m=(m+v+12)%12; let x=new Date(y,m+1,0).getDate(); if(d>x)d=x; i
 function adjY(v){if(y+v>=1900&&y+v<=2099)y+=v; iR=!iQ; update();}
 function setToday(){let n=new Date(); d=n.getDate(); m=n.getMonth(); y=n.getFullYear(); iR=!iQ; update();}
 function roll(){y=2026; m=Math.floor(Math.random()*12); d=Math.floor(Math.random()*28)+1; iR=!iQ; update();}
-function reveal(){iR=true; update();}
-function toggleQuiz(){iQ=!iQ; iR=!iQ; document.getElementById('q-tog').innerText=iQ?"Quiz: ON":"Quiz: OFF"; update();}
+function reveal(){iR=true; update(true);}
+function toggleQuiz(){iQ=!iQ; iR=!iQ; update(false);}
 function toggleDark(){document.body.classList.toggle('dark-mode');}
-
-function toggleLang() {
-    ln = (ln === 'EN' ? 'PL' : 'EN');
-    // We call update, but we temporarily disable the auto-speech
-    let tempAuto = iR;
-    iR = false; 
-    update();
-    iR = tempAuto; 
-}
-
-function update() {
-    let dt=new Date(y,m,d), dw=dt.getDay(), hol=getH(d,m), sea=getS(m);
-    document.getElementById('cal-h').innerText = mN[m].toUpperCase();
-    document.getElementById('cal-h').className = hol ? "cal-header is-holiday" : "cal-header";
-    document.getElementById('cal-b').innerText = dW[dw];
-    document.getElementById('cal-f').innerText = dO[d];
-    document.getElementById('dv').innerText = d.toString().padStart(2,'0');
-    document.getElementById('mv').innerText = (m+1).toString().padStart(2,'0');
-    document.getElementById('yv').innerText = y;
-    document.getElementById('s-emo').innerText = sea.e;
-    document.getElementById('s-nam').innerText = sea.n;
-    document.getElementById('hol-t').innerText = hol ? `★ ${hol} ★` : "";
-    
-    // Always calculate the Polish text for the voice engine even if UI is in Quiz mode
-    let polStr = `${dW[dw]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
-    let engStr = `${dE[dw]}, ${d} ${mN[m]} ${y}`;
-    
-    const pt = document.getElementById('pol-t'), et = document.getElementById('eng-t'), rb = document.getElementById('rev-b');
-    
-    if(iQ && !iR) { 
-        pt.innerText = ln=='EN'?"How to say?":"Jak to powiedzieć?";
-        et.innerText="";
-        rb.style.display="block";
-    } else { 
-        pt.innerText = polStr;
-        et.innerText = engStr;
-        rb.style.display="none";
-        // Only speak automatically if we are NOT just toggling the language label
-        if(iR) speak(1);
-    }
-}
+function toggleLang(){ln=ln=='EN'?'PL':'EN'; update(false);}
 
 function speak(rate) {
     window.speechSynthesis.cancel();
-    const text = document.getElementById('pol-t').innerText;
-    if(text.includes("?")) return;
+    // Get the actual polish text for speech, even if in quiz mode
+    let dt=new Date(y,m,d), dw=dt.getDay();
+    let text = `${dW[dw]}, ${dO[d]} ${mG[m]} ${spellY(y)} roku`;
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'pl-PL';
     msg.rate = rate;

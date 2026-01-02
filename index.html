@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Polish Dates Master Pro</title>
+    <link rel="stylesheet" href="styles.css?v=1.1">
+</head>
+<body onload="init()">
+<div class="container">
+    <div class="season-bar">
+        <span id="s-emo">❄️</span> <span id="s-nam">Zima</span>
+    </div>
+    
+    <div class="top-row">
+        <button class="btn-sub" onclick="toggleDark()">🌓</button>
+        <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
+        <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz</button>
+        <button class="btn-cult" onclick="showCulture()">🏛️ Kultura</button>
+    </div>
+
+    <div class="calendar-box">
+        <div class="cal-header" id="cal-h">MONTH</div>
+        <div class="cal-body" id="cal-b">DAY OF WEEK</div>
+        <div class="cal-footer" id="cal-f">ORDINAL</div>
+    </div>
+
+    <div class="picker-container">
+        <div class="picker-col">
+            <button class="p-btn" onclick="adjD(1)">+</button>
+            <div class="v-disp" id="dv">01</div>
+            <button class="p-btn" onclick="adjD(-1)">-</button>
+        </div>
+        <div class="picker-col">
+            <button class="p-btn" onclick="adjM(1)">+</button>
+            <div class="v-disp" id="mv">01</div>
+            <button class="p-btn" onclick="adjM(-1)">-</button>
+        </div>
+        <div class="picker-col">
+            <button class="p-btn" onclick="adjY(1)">+</button>
+            <div class="v-disp" id="yv">2026</div>
+            <button class="p-btn" onclick="adjY(-1)">-</button>
+        </div>
+    </div>
+
+    <div class="display-area">
+        <div class="holiday-banner" id="hol-t"></div>
+        <div class="polish-display" id="pol-t"></div>
+        <div class="english-display" id="eng-t"></div>
+        <button id="rev-b" class="btn-main" style="display:none; margin-top:10px;" onclick="reveal()">REVEAL ANSWER</button>
+    </div>
+
+    <button class="btn-real" onclick="setToday()">ACTUAL DATE</button>
+    <button class="btn-main" onclick="roll()">RANDOM DATE</button>
+    
+    <div class="audio-grid">
+        <button class="btn-sub" onclick="speak(1)">🔊 REPEAT</button>
+        <button class="btn-sub" onclick="speak(0.6)">🐢 SLOW</button>
+    </div>
+</div>
+
+<div id="cultModal" class="modal">
+    <div class="modal-header">
+        <h2>Polska Kultura</h2>
+        <button class="close-btn" onclick="closeCulture()">CLOSE</button>
+    </div>
+    <div id="cultContent"></div>
+</div>
+
+<script src="script.js?v=1.1"></script>
+</body>
+</html>

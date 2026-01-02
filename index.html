@@ -6,15 +6,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Learn Polish Dates</title>
-    
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" href="icon.png">
-
-    <link rel="stylesheet" href="styles.css?v=1.5">
+    <link rel="stylesheet" href="styles.css?v=1.6">
 </head>
 <body onload="init()">
 <div class="container">
-    <div class="app-header">
+    <div class="app-header flag-bg">
         <h1 id="main-title">Learn to Say Polish Dates</h1>
     </div>
     
@@ -23,12 +19,23 @@
             <div id="s-emo">❄️</div>
             <div id="s-nam">Zima</div>
         </div>
-
-        <div class="calendar-box">
+        <div class="calendar-card">
             <div class="cal-header" id="cal-h">MONTH</div>
             <div class="cal-body" id="cal-b">01</div>
             <div class="cal-footer" id="cal-f">DAY OF WEEK</div>
         </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-header">
+            <button class="nav-btn" onclick="adjM(-1)">◀</button>
+            <span id="grid-month-yr">Month 2026</span>
+            <button class="nav-btn" onclick="adjM(1)">▶</button>
+        </div>
+        <div class="grid-weekdays">
+            <span>Pn</span><span>Wt</span><span>Śr</span><span>Cz</span><span>Pt</span><span>So</span><span>Nd</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
     </div>
 
     <div class="top-row">
@@ -36,24 +43,6 @@
         <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
         <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
         <button class="btn-cult" onclick="showCulture()"><span id="btn-cult-text">🏛️ Culture</span></button>
-    </div>
-
-    <div class="picker-container">
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjD(1)">+</button>
-            <div class="v-disp" id="dv">01</div>
-            <button class="p-btn" onclick="adjD(-1)">-</button>
-        </div>
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjM(1)">+</button>
-            <div class="v-disp" id="mv">01</div>
-            <button class="p-btn" onclick="adjM(-1)">-</button>
-        </div>
-        <div class="picker-col">
-            <button class="p-btn" onclick="adjY(1)">+</button>
-            <div class="v-disp" id="yv">2026</div>
-            <button class="p-btn" onclick="adjY(-1)">-</button>
-        </div>
     </div>
 
     <div class="display-area">
@@ -81,7 +70,6 @@
     </div>
     <div id="cultContent"></div>
 </div>
-
-<script src="script.js?v=1.5"></script>
+<script src="script.js?v=1.6"></script>
 </body>
 </html>

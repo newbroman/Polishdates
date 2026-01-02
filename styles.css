@@ -9,45 +9,28 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
     color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
-    overflow: hidden; /* Prevents accidental scrolling */
 }
+.container { background: var(--card); padding: 10px; border-radius: 20px; width: 300px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
 
-/* Container Scaling */
-.container { 
-    background: var(--card); 
-    padding: 10px; /* Reduced from 15px */
-    border-radius: 20px; 
-    width: 300px; /* Slightly narrower */
-    text-align: center; 
-    backdrop-filter: blur(10px); 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
-}
-
-/* Compact Header */
-.flag-bg { 
-    background: linear-gradient(to bottom, #ffffff 50%, #dc3545 50%); 
-    border-radius: 10px; 
-    padding: 6px; /* Thinner header */
-    border: 2px solid var(--border); 
-    margin-bottom: 8px; 
-}
+/* Polish Flag Header */
+.flag-bg { background: linear-gradient(to bottom, #ffffff 50%, #dc3545 50%); border-radius: 10px; padding: 6px; border: 2px solid var(--border); margin-bottom: 8px; }
 #main-title { font-size: 0.85rem; margin: 0; font-weight: 900; color: #333; text-shadow: 0.5px 0.5px 0px white; }
 
 .main-layout { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
 
-/* Compact Sidebar */
-.season-sidebar { background: var(--btn-sub); padding: 8px 4px; border-radius: 12px; width: 70px; color: var(--accent); border: 1px solid var(--border); }
+/* Season Sidebar */
+.season-sidebar { background: var(--btn-sub); padding: 8px 4px; border-radius: 12px; width: 75px; color: var(--accent); border: 1px solid var(--border); }
 #s-emo { font-size: 2rem; display: block; margin-bottom: 2px; }
 #s-nam { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
 
-/* Compact Calendar Card */
+/* Calendar Card */
 .calendar-card { width: 100px; height: 100px; background: white; border-radius: 10px; border: 3px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
-.cal-header { height: 22px; background: var(--accent); color: white; line-height: 22px; font-weight: bold; font-size: 0.65rem; }
+.cal-header { height: 22px; background: var(--accent); color: white; line-height: 22px; font-weight: bold; font-size: 0.65rem; text-transform: uppercase;}
 .cal-header.is-holiday { background: var(--holiday); }
 .cal-body { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; color: #333; }
-.cal-footer { height: 18px; font-size: 0.55rem; color: #666; border-top: 1px solid #eee; line-height: 18px; font-weight: bold; background: #f9f9f9; }
+.cal-footer { height: 18px; font-size: 0.55rem; color: #666; border-top: 1px solid #eee; line-height: 18px; font-weight: bold; background: #f9f9f9; text-transform: uppercase;}
 
-/* Compact Grid */
+/* Grid */
 .grid-container { background: #fff; border-radius: 10px; border: 2px solid var(--border); margin-bottom: 8px; padding: 6px; }
 .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-weight: 800; font-size: 0.8rem; }
 .nav-btn { width: 26px; padding: 3px; background: var(--btn-sub); border-radius: 4px; cursor: pointer; border: none; }
@@ -56,11 +39,11 @@ body {
 .grid-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; border-radius: 4px; cursor: pointer; border: 1px solid #f0f0f0; }
 .grid-day.active { background: var(--accent) !important; color: white !important; font-weight: 900; }
 .grid-day.today { border: 2px solid #007bff; }
-.grid-day.is-holiday { background: #fff9db; border-color: var(--gold); color: #d35400; position: relative; }
+.grid-day.is-holiday { background: #fff9db; border-color: var(--gold); color: #d35400; font-weight: bold; position: relative; }
 .grid-day.is-holiday::after { content: "★"; position: absolute; top: -3px; right: 0px; font-size: 0.4rem; color: var(--gold); }
 .grid-day:empty { visibility: hidden; }
 
-/* Tighter Controls */
+/* Display area */
 .top-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 8px; }
 .display-area { min-height: 75px; background: rgba(0,0,0,0.03); border-radius: 10px; padding: 8px; margin-bottom: 8px; display: flex; flex-direction: column; justify-content: center; }
 .holiday-banner { color: var(--holiday); font-weight: 800; font-size: 0.65rem; margin-bottom: 2px; }
@@ -68,17 +51,18 @@ body {
 .english-display { font-size: 0.7rem; font-style: italic; color: #666; margin-top: 2px; }
 
 .action-grid, .audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 5px; }
-
-button { cursor: pointer; border-radius: 8px; border: none; padding: 8px; font-weight: 700; width: 100%; font-size: 0.7rem; }
+button { cursor: pointer; border-radius: 8px; border: none; padding: 8px; font-weight: 700; width: 100%; font-size: 0.7rem;}
 .btn-main { background: var(--accent); color: white; }
 .btn-real { background: #007bff; color: white; }
 .btn-sub { background: var(--btn-sub); color: var(--text); }
 .btn-cult { background: var(--gold); color: white; }
 
-/* Scaling for very small screens */
-@media (max-height: 670px) {
-    .container {
-        transform: scale(0.9);
-        transform-origin: center center;
-    }
-}
+/* Modal Fix: position fixed hides it from the right-side flow */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--card); z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+.close-btn { background: var(--holiday); color: white; width: auto !important; padding: 5px 12px; }
+.cult-card { background: var(--btn-sub); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 5px solid var(--accent); text-align: left; }
+.cult-card h3 { margin: 0; font-size: 0.9rem; color: var(--accent); }
+.cult-card p { font-size: 0.8rem; margin: 4px 0 0; }
+
+@media (max-height: 670px) { .container { transform: scale(0.95); transform-origin: center top; } }

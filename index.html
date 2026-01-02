@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,14 +16,16 @@
     
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="styles.css?v=2.7">
-    // This forces the page to scroll 1 pixel down, which often hides the mobile address bar
-window.addEventListener("load", function() {
-    setTimeout(function(){
-        window.scrollTo(0, 1);
-    }, 0);
-});
-    
+
+    <script>
+        window.addEventListener("load", function() {
+            setTimeout(function(){
+                window.scrollTo(0, 1);
+            }, 0);
+        });
+    </script>
 </head>
+
 <body onload="init()">
 <div class="container">
     <div class="app-header flag-bg">

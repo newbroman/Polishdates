@@ -3,28 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Learn to Say Polish Dates</title>
-    <link rel="stylesheet" href="styles.css?v=1.4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Learn Polish Dates</title>
+    
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="icon.png">
+
+    <link rel="stylesheet" href="styles.css?v=1.5">
 </head>
 <body onload="init()">
 <div class="container">
-    <h1 id="main-title" style="font-size: 1.1rem; margin-bottom: 10px; color: var(--accent);">Learn to Say Polish Dates</h1>
-    
-    <div class="season-bar">
-        <span id="s-emo">❄️</span> <span id="s-nam">Zima</span>
+    <div class="app-header">
+        <h1 id="main-title">Learn to Say Polish Dates</h1>
     </div>
     
+    <div class="main-layout">
+        <div class="season-sidebar">
+            <div id="s-emo">❄️</div>
+            <div id="s-nam">Zima</div>
+        </div>
+
+        <div class="calendar-box">
+            <div class="cal-header" id="cal-h">MONTH</div>
+            <div class="cal-body" id="cal-b">01</div>
+            <div class="cal-footer" id="cal-f">DAY OF WEEK</div>
+        </div>
+    </div>
+
     <div class="top-row">
         <button class="btn-sub" onclick="toggleDark()">🌓</button>
         <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
         <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
         <button class="btn-cult" onclick="showCulture()"><span id="btn-cult-text">🏛️ Culture</span></button>
-    </div>
-
-    <div class="calendar-box">
-        <div class="cal-header" id="cal-h">MONTH</div>
-        <div class="cal-body" id="cal-b">01</div>
-        <div class="cal-footer" id="cal-f">DAY OF WEEK</div>
     </div>
 
     <div class="picker-container">
@@ -49,11 +60,13 @@
         <div class="holiday-banner" id="hol-t"></div>
         <div class="polish-display" id="pol-t"></div>
         <div class="english-display" id="eng-t"></div>
-        <button id="rev-b" class="btn-main" style="display:none; margin-top:10px;" onclick="reveal()">REVEAL ANSWER</button>
+        <button id="rev-b" class="btn-main" style="display:none;" onclick="reveal()">REVEAL</button>
     </div>
 
-    <button class="btn-real" id="btn-actual" onclick="setToday()">TODAY</button>
-    <button class="btn-main" id="btn-random" onclick="roll()">RANDOM DATE</button>
+    <div class="action-grid">
+        <button class="btn-real" id="btn-actual" onclick="setToday()">TODAY</button>
+        <button class="btn-main" id="btn-random" onclick="roll()">RANDOM</button>
+    </div>
     
     <div class="audio-grid">
         <button class="btn-sub" id="btn-repeat" onclick="speak(1)">🔊 REPEAT</button>
@@ -69,6 +82,6 @@
     <div id="cultContent"></div>
 </div>
 
-<script src="script.js?v=1.4"></script>
+<script src="script.js?v=1.5"></script>
 </body>
 </html>

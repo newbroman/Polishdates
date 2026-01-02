@@ -11,6 +11,7 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
     color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
+    /* App-like behaviors */
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
@@ -29,14 +30,14 @@ body {
 #s-emo { font-size: 2rem; display: block; margin-bottom: 2px; }
 #s-nam { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
 
-/* Calendar Card */
+/* Calendar Card - Dark Mode Compatible */
 .calendar-card { width: 100px; height: 100px; background: var(--grid-bg); border-radius: 10px; border: 3px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
 .cal-header { height: 22px; background: var(--accent); color: white; line-height: 22px; font-weight: bold; font-size: 0.65rem; text-transform: uppercase;}
 .cal-header.is-holiday { background: var(--holiday); }
 .cal-body { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; color: var(--text); }
 .cal-footer { height: 18px; font-size: 0.55rem; color: var(--text); border-top: 1px solid var(--border); line-height: 18px; font-weight: bold; background: var(--btn-sub); text-transform: uppercase;}
 
-/* Grid */
+/* Grid - Dark Mode Compatible */
 .grid-container { background: var(--grid-bg); border-radius: 10px; border: 2px solid var(--border); margin-bottom: 8px; padding: 6px; }
 .grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-weight: 800; font-size: 0.8rem; }
 .nav-btn { width: 26px; padding: 3px; background: var(--btn-sub); border-radius: 4px; cursor: pointer; border: none; color: var(--text); }

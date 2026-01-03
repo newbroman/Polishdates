@@ -45,7 +45,9 @@ const cultureData = [
     { title: "Names of Months", text: "Polish month names are derived from nature. 'Styczeń' comes from 'stykać' (to join), as the old year meets the new." },
     { title: "The Genitive Case", text: "Dates use the genitive month (e.g., 'stycznia'). It translates to 'the 1st OF January'." },
     { title: "Naming Days", text: "In Poland, 'Imieniny' (Name Days) are often more important than birthdays." },
-    { title: "Constitution Day", text: "May 3rd commemorates the first modern constitution in Europe (1791)." }
+    { title: "Constitution Day", text: "May 3rd commemorates the first modern constitution in Europe (1791)." },
+    { title: "Boże Ciało", text: "Corpus Christi features large street processions where people walk to four outdoor altars decorated with birch branches." },
+    { title: "Fat Thursday", text: "On 'Tłusty Czwartek', Poles eat millions of donuts (pączki) before Lent begins." }
 ];
 
 // --- CORE LOGIC ---
@@ -60,6 +62,8 @@ function updateYearlyHolidays(year) {
     holidays[`${east.month + 1}-${east.day}`] = { PL: "Wielkanoc", EN: "Easter Sunday" };
     const emDate = new Date(year, east.month, east.day + 1);
     holidays[`${emDate.getMonth() + 1}-${emDate.getDate()}`] = { PL: "Poniedziałek Wielkanocny", EN: "Easter Monday" };
+    const ccDate = new Date(year, east.month, east.day + 60);
+    holidays[`${ccDate.getMonth() + 1}-${ccDate.getDate()}`] = { PL: "Boże Ciało", EN: "Corpus Christi" };
 }
 
 function getEaster(year) {
@@ -102,7 +106,6 @@ function updateDisplay() {
     document.getElementById('cal-b').innerText = selD.toString().padStart(2, '0');
     document.getElementById('cal-f').innerText = (lang === 'PL' ? dNames.PL[dw] : dNames.EN[dw]).toUpperCase();
     
-    // Dynamic Season Logic
     let season = getSeason(currentM, selD);
     document.getElementById('s-emo').innerText = season.emo;
     document.getElementById('s-nam').innerText = season.name;
@@ -125,7 +128,6 @@ function updateDisplay() {
     }
 }
 
-// --- HELPERS & ACTIONS ---
 function getOrdinalPL(n) {
     const ords = ["pierwszy", "drugi", "trzeci", "czwarty", "piąty", "szósty", "siódmy", "ósmy", "dziewiąty", "dziesiąty", "jedenasty", "dwunasty", "trzynasty", "czternasty", "piętnasty", "szesnasty", "siedemnasty", "osiemnasty", "dziewiętnasty", "dwudziesty"];
     if (n <= 20) return ords[n-1];
@@ -135,10 +137,10 @@ function getOrdinalPL(n) {
 }
 
 function getOrdinalPHO(n) {
-    const p = ["PYERV-shi", "DROO-gi", "TSHE-chee", "CHVAR-ti", "PYOHN-ti", "SHOO-sti", "SHYED-mi", "OOSH-mi", "JEV-yonti", "dje-SHOHN-ti", "ye-den-ASS-ti", "dvoo-nass-ti", "tshi-nass-ti", "chter-nass-ti", "pyent-nass-ti", "shes-nass-ti", "syed-em-nass-ti", "osh-em-nass-ti", "jev-yent-nass-ti", "dvoo-DZYESS-ti"];
+    const p = ["PYERV-shi", "DROO-gi", "TSHE-chee", "CHVAR-ti", "PYOHN-ti", "SHOO-stee", "SHYED-mee", "OOSH-mee", "JEV-yontee", "dje-SHOHN-tee", "ye-den-ASS-tee", "dvoo-nass-tee", "tshi-nass-tee", "chter-nass-tee", "pyent-nass-tee", "shes-nass-tee", "syed-em-nass-tee", "osh-em-nass-tee", "jev-yent-nass-tee", "dvoo-DZYESS-tee"];
     if (n <= 20) return p[n-1];
-    if (n === 30) return "tshi-DZYESS-ti";
-    return (Math.floor(n/10) === 2 ? "dvoo-DZYESS-ti " : "tshi-DZYESS-ti ") + (n % 10 > 0 ? p[(n % 10) - 1] : "");
+    if (n === 30) return "tshi-DZYESS-tee";
+    return (Math.floor(n/10) === 2 ? "dvoo-DZYESS-tee " : "tshi-DZYESS-tee ") + (n % 10 > 0 ? p[(n % 10) - 1] : "");
 }
 
 function getOrdinalEN(n) { let s = ["th","st","nd","rd"], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
@@ -153,11 +155,14 @@ function roll() { currentM = Math.floor(Math.random()*12); selD = Math.floor(Mat
 function reveal() { quizMode = false; updateDisplay(); quizMode = true; document.getElementById('rev-b').style.display = "none"; }
 
 function showCulture() {
+    const modal = document.getElementById('cultModal');
     const content = document.getElementById('cultContent');
-    const item = cultureData[selD % cultureData.length];
-    content.innerHTML = `<div class="cult-card"><h3>${item.title}</h3><p>${item.text}</p></div>`;
-    document.getElementById('cultModal').style.display = "block";
+    const noteIndex = selD % cultureData.length;
+    const item = cultureData[noteIndex];
+    content.innerHTML = `<div class="cult-card"><h3>Did you know?</h3><p>${item.text}</p></div><p style="font-size: 0.7rem; opacity: 0.6; margin-top: 10px;">(Tip: Select a different date to see another fact!)</p>`;
+    modal.style.display = "block";
 }
+
 function closeCulture() { document.getElementById('cultModal').style.display = "none"; }
 function speak(rate = 1) {
     let ut = new SpeechSynthesisUtterance(document.getElementById('pol-t').innerText);

@@ -8,26 +8,15 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00b894">
     <meta name="mobile-web-app-capable" content="yes">
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon.png">
     
-    <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css?v=3.3">
-
-    <script>
-        window.addEventListener("load", function() {
-            setTimeout(function(){
-                window.scrollTo(0, 1);
-            }, 0);
-        });
-    </script>
+    <link rel="stylesheet" href="styles.css?v=1.111">
 </head>
 <body onload="init()">
 <div class="container">
     <div class="app-header flag-bg">
-        <h1 id="main-title">Learn to Say Polish Dates</h1>
+        <h1 id="main-title">Learn Polish Dates</h1>
     </div>
     
     <div class="main-layout">
@@ -55,46 +44,42 @@
     </div>
 
     <div class="top-row">
-    <button class="btn-sub" onclick="toggleDark()">🌓</button>
-    <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
-    <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
-    <button class="btn-cult" onclick="showCulture()">🏛️</button>
-</div>
-
-
-    <div class="audio-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-    <button class="btn-sub" id="btn-repeat" onclick="speak(1)">🔊 REPEAT</button>
-    <button class="btn-sub" id="btn-slow" onclick="speak(0.6)">🐢 SLOW</button>
-</div>
+        <button class="btn-sub" onclick="toggleDark()">🌓</button>
+        <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
+        <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
+        <button class="btn-cult" onclick="showCulture()">🏛️</button>
+    </div>
 
     <div class="display-area">
         <div class="holiday-banner" id="hol-t"></div>
         <div class="polish-display" id="pol-t"></div>
         <div class="phonetic-display" id="pho-t" style="display:none;"></div>
-        <div class="english-display" id="eng-t"></div>
+        <div class="english-display" id="eng-t" style="display:none;"></div>
         <button id="rev-b" class="btn-main" style="display:none;" onclick="reveal()">REVEAL</button>
     </div>
 
     <div class="action-grid">
-        <button class="btn-real" id="btn-actual" onclick="setToday()">TODAY</button>
-        <button class="btn-main" id="btn-random" onclick="roll()">RANDOM</button>
+        <button class="btn-real" onclick="setToday()">TODAY</button>
+        <button class="btn-main" onclick="roll()">RANDOM</button>
         <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
     </div>
     
     <div class="audio-grid">
-        <button class="btn-sub" id="btn-repeat" onclick="speak(1)">🔊 REPEAT</button>
-        <button class="btn-sub" id="btn-slow" onclick="speak(0.6)">🐢 SLOW</button>
+        <button class="btn-sub" onclick="speak(1)">🔊 REPEAT</button>
+        <button class="btn-sub" onclick="speak(0.6)">🐢 SLOW</button>
     </div>
 </div>
 
 <div id="cultModal" class="modal">
     <div class="modal-header">
         <h2 id="modal-title">Polska Kultura</h2>
-        <button class="close-btn" id="btn-close" onclick="closeCulture()">CLOSE</button>
+        <button class="close-btn" onclick="closeCulture()">CLOSE</button>
     </div>
     <div id="cultContent"></div>
 </div>
 
-<script src="script.js?v=3.3"></script>
+<script src="culture.js?v=1.111"></script>
+<script src="script.js?v=1.111"></script>
+
 </body>
 </html>

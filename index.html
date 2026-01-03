@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="icon.png">
     
     <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css?v=3.1">
+    <link rel="stylesheet" href="styles.css?v=3.3">
 
     <script>
         window.addEventListener("load", function() {
@@ -55,11 +55,17 @@
     </div>
 
     <div class="top-row">
-        <button class="btn-sub" onclick="toggleDark()">🌓</button>
-        <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
-        <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
-        <button class="btn-cult" onclick="showCulture()"><span id="btn-cult-text">🏛️ Culture</span></button>
-    </div>
+    <button class="btn-sub" onclick="toggleDark()">🌓</button>
+    <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
+    <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
+    <button class="btn-cult" onclick="showCulture()">🏛️</button>
+</div>
+
+
+    <div class="audio-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+    <button class="btn-sub" id="btn-repeat" onclick="speak(1)">🔊 REPEAT</button>
+    <button class="btn-sub" id="btn-slow" onclick="speak(0.6)">🐢 SLOW</button>
+</div>
 
     <div class="display-area">
         <div class="holiday-banner" id="hol-t"></div>
@@ -89,6 +95,6 @@
     <div id="cultContent"></div>
 </div>
 
-<script src="script.js?v=3.1"></script>
+<script src="script.js?v=3.3"></script>
 </body>
 </html>

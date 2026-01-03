@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <link rel="stylesheet" href="styles.css?v=1.111">
+    <link rel="stylesheet" href="styles.css?v=41.2">
 </head>
 <body onload="init()">
 <div class="container">
@@ -46,7 +46,8 @@
     <div class="top-row">
         <button class="btn-sub" onclick="toggleDark()">🌓</button>
         <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
-        <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
+        <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC</button>
+        <button class="btn-sub" onclick="toggleYear()">YEAR</button>
         <button class="btn-cult" onclick="showCulture()">🏛️</button>
     </div>
 
@@ -61,7 +62,7 @@
     <div class="action-grid">
         <button class="btn-real" onclick="setToday()">TODAY</button>
         <button class="btn-main" onclick="roll()">RANDOM</button>
-        <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
+        <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz</button>
     </div>
     
     <div class="audio-grid">
@@ -78,8 +79,9 @@
     <div id="cultContent"></div>
 </div>
 
-<script src="culture.js?v=1.111"></script>
-<script src="script.js?v=1.111"></script>
+<script src="culture.js?v=41.2"></script>
+<script src="years.js?v=41.2"></script>
+<script src="script.js?v=41.2"></script>
 
 </body>
 </html>

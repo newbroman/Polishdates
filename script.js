@@ -2,79 +2,45 @@ let currentM = new Date().getMonth();
 let currentY = new Date().getFullYear();
 let selD = new Date().getDate();
 let lang = 'PL';
+let showYear = true; // Toggle for showing year in phrase
 let showPhonetics = false;
-
-// ... Keep your holidays, mNames, and dNames objects here ...
-
-// NEW: Year to Words Converter
-function getYearWordsPL(year) {
-    const years = {
-        2024: "dwa tysiące dwudziestego czwartego",
-        2025: "dwa tysiące dwudziestego piątego",
-        2026: "dwa tysiące dwudziestego szóstego",
-        2027: "dwa tysiące dwudziestego siódmego",
-        2028: "dwa tysiące dwudziestego ósmego",
-        2029: "dwa tysiące dwudziestego dziewiątego",
-        2030: "dwa tysiące trzydziestego"
-    };
-    return years[year] || year.toString();
-}
 
 function updateDisplay() {
     let dw = new Date(currentY, currentM, selD).getDay();
     
-    // Header & Grid Month
-    const monthName = lang === 'PL' ? mNames.PL_NOM[currentM] : mNames.EN[currentM];
-    document.getElementById('cal-h').innerText = monthName.toUpperCase();
+    // Header & Grid Updates
+    document.getElementById('cal-h').innerText = (lang === 'PL' ? mNames.PL_NOM[currentM] : mNames.EN[currentM]).toUpperCase();
     document.getElementById('cal-b').innerText = selD.toString().padStart(2, '0');
     document.getElementById('cal-f').innerText = (lang === 'PL' ? dNames.PL[dw] : dNames.EN[dw]).toUpperCase();
 
-    // The Date Strings
-    const polishFull = `${getOrdinalPL(selD)} ${mNames.PL[currentM]} ${getYearWordsPL(currentY)} roku`;
-    const englishFull = `${getOrdinalEN(selD)} of ${mNames.EN[currentM]}, ${currentY}`;
-
-    // Update Text Areas
-    document.getElementById('pol-t').innerText = polishFull;
+    // The Polish Phrase Logic
+    const dayWords = getOrdinalPL(selD);
+    const monthWords = mNames.PL[currentM];
+    const yearWords = showYear ? getYearWordsPL(currentY, true) : "";
     
-    // FIX: English translation only shows if lang is 'EN'
-    const engDisplay = document.getElementById('eng-t');
-    engDisplay.innerText = englishFull;
-    engDisplay.style.display = (lang === 'EN') ? "block" : "none";
+    document.getElementById('pol-t').innerText = `${dayWords} ${monthWords} ${yearWords}`.trim();
+    
+    // Toggle English Display
+    const engText = `${getOrdinalEN(selD)} of ${mNames.EN[currentM]}, ${currentY}`;
+    document.getElementById('eng-t').innerText = (lang === 'EN') ? engText : "";
+    document.getElementById('eng-t').style.display = (lang === 'EN') ? "block" : "none";
 
-    // Phonetics
+    // Phonetics Display
+    document.getElementById('pho-t').style.display = showPhonetics ? "block" : "none";
     if (showPhonetics) {
-        document.getElementById('pho-t').innerText = `${getOrdinalPHO(selD)} ${mNames.PHO[currentM]} ${yPHO[currentY] || currentY}`;
-        document.getElementById('pho-t').style.display = "block";
-    } else {
-        document.getElementById('pho-t').style.display = "none";
+        document.getElementById('pho-t').innerText = `${getOrdinalPHO(selD)} ${mNames.PHO[currentM]} ${currentY}`;
     }
 }
 
-function toggleLang() {
-    lang = (lang === 'PL') ? 'EN' : 'PL';
-    renderGrid(); // Refresh grid to show English month name
-    updateDisplay(); // Refresh display to show English date string
-}
-
-function showCulture() {
-    const modal = document.getElementById('cultModal');
-    const content = document.getElementById('cultContent');
-    // Cycle notes based on the day
-    const item = cultureData[selD % cultureData.length];
-    
-    content.innerHTML = `
-        <div class="cult-card">
-            <h3>${item.title}</h3>
-            <p>${item.text}</p>
-        </div>
-    `;
-    modal.style.display = "block";
-}
-
-// ... Keep renderGrid, getOrdinalPL, getOrdinalPHO, getOrdinalEN ...
-// Ensure init() is called on load
-function init() {
-    updateYearlyHolidays(currentY);
-    renderGrid();
+function toggleYear() {
+    showYear = !showYear;
     updateDisplay();
+}
+
+function getSeason(month, day) {
+    // 21st day logic
+    if ((month == 11 && day >= 21) || month <= 1 || (month == 2 && day < 21)) return { name: "Zima", emo: "❄️" };
+    if ((month == 2 && day >= 21) || month <= 4 || (month == 5 && day < 21)) return { name: "Wiosna", emo: "🌱" };
+    if ((month == 5 && day >= 21) || month <= 7 || (month == 8 && day < 21)) return { name: "Lato", emo: "☀️" };
+    return { name: "Jesień", emo: "🍂" };
 }

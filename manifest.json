@@ -1,18 +1,19 @@
 {
   "name": "Polish Date Master",
   "short_name": "Polish Dates",
-  "start_url": "index.html",
+  "description": "Learn Polish dates and culture from 0 to 3000 AD.",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#e0e5ec",
   "theme_color": "#00b894",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

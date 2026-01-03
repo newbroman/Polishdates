@@ -1,36 +1,40 @@
-const CACHE_NAME = 'polish-dates-v2.6';
-const ASSETS = [
+const CACHE_NAME = 'polish-dates-v41.2';
+const urlsToCache = [
   './',
   './index.html',
   './styles.css',
   './script.js',
-  './manifest.json',
-  './icon.png'
+  './years.js',
+  './culture.js',
+  './manifest.json'
 ];
 
-// Install: Cache all files
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+// Install Service Worker
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Activate: Clean up old caches
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
+// Activate & Cleanup Old Caches
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
         })
       );
     })
   );
 });
 
-// Fetch: Serve from cache, then network
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
+// Fetch Strategy: Network First, Fallback to Cache
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });

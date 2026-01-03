@@ -1,3 +1,5 @@
+/* Version 41.2 - Updated for Year Toggle and Sidebar Cleanup */
+
 :root { 
     --bg: #e0e5ec; 
     --card: #ffffff; 
@@ -19,7 +21,6 @@ body.dark-mode {
     --grid-bg: #2d3436;
 }
 
-/* App-like behavior: Prevents scrolling and text selection */
 body { 
     font-family: -apple-system, system-ui, sans-serif;
     background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
@@ -31,193 +32,104 @@ body {
     margin: 0;
     touch-action: manipulation;
     user-select: none;
-    -webkit-user-select: none;
-    overscroll-behavior-y: contain;
     overflow: hidden;
 }
 
 .container { 
     background: var(--card); 
-    padding: 10px; 
+    padding: 15px; 
     border-radius: 20px; 
-    width: 300px; 
+    width: 320px; 
     text-align: center; 
-    backdrop-filter: blur(10px); 
     box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
     border: 1px solid var(--border); 
 }
 
-/* Updated: Increased padding for the bigger title */
 .flag-bg { 
     background: linear-gradient(to bottom, #ffffff 50%, #dc3545 50%); 
     border-radius: 10px; 
-    padding: 10px; 
+    padding: 12px; 
     border: 2px solid var(--border); 
-    margin-bottom: 8px; 
+    margin-bottom: 12px; 
 }
 
-/* Updated: Title size increased to 1.2rem */
-#main-title { 
-    font-size: 1.2rem; 
-    margin: 0; 
-    font-weight: 900; 
-    color: #333; 
-    text-shadow: 0.5px 0.5px 0px white; 
-}
+#main-title { font-size: 1.2rem; margin: 0; font-weight: 900; color: #333; }
 
-.main-layout { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
+.main-layout { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
 
+/* Sidebar updated: No icon, centered text */
 .season-sidebar { 
     background: var(--btn-sub); 
-    padding: 8px 4px; 
+    padding: 15px 5px; 
     border-radius: 12px; 
-    width: 75px; 
+    width: 85px; 
     color: var(--accent); 
     border: 1px solid var(--border); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-#s-emo { font-size: 2rem; display: block; margin-bottom: 2px; }
-#s-nam { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
+#s-emo { font-size: 2.2rem; margin-bottom: 5px; }
+#s-nam { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
 
 .calendar-card { 
-    width: 100px; 
-    height: 100px; 
+    width: 110px; 
+    height: 110px; 
     background: var(--grid-bg); 
-    border-radius: 10px; 
+    border-radius: 12px; 
     border: 3px solid var(--border); 
     overflow: hidden; 
     display: flex; 
     flex-direction: column; 
 }
 
-.cal-header { 
-    height: 22px; 
-    background: var(--accent); 
-    color: white; 
-    line-height: 22px; 
-    font-weight: bold; 
-    font-size: 0.65rem; 
-    text-transform: uppercase;
-}
-
-/* Holiday styling for the calendar card */
+.cal-header { height: 25px; background: var(--accent); color: white; line-height: 25px; font-weight: bold; font-size: 0.7rem; }
 .cal-header.is-holiday { background: var(--holiday); }
+.cal-body { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 900; }
+.cal-footer { height: 20px; font-size: 0.6rem; border-top: 1px solid var(--border); line-height: 20px; background: var(--btn-sub); font-weight: bold; }
 
-.cal-body { 
-    flex-grow: 1; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 2rem; 
-    font-weight: 900; 
-    color: var(--text); 
-}
-
-.cal-footer { 
-    height: 18px; 
-    font-size: 0.55rem; 
-    color: var(--text); 
-    border-top: 1px solid var(--border); 
-    line-height: 18px; 
-    font-weight: bold; 
-    background: var(--btn-sub); 
-    text-transform: uppercase;
-}
-
-.grid-container { 
-    background: var(--grid-bg); 
-    border-radius: 10px; 
-    border: 2px solid var(--border); 
-    margin-bottom: 8px; 
-    padding: 6px; 
-}
-
-.grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-weight: 800; font-size: 0.8rem; }
-
-.nav-btn { 
-    width: 26px; 
-    padding: 3px; 
-    background: var(--btn-sub); 
-    border-radius: 4px; 
-    cursor: pointer; 
-    border: none; 
-    color: var(--text); 
-}
-
-.grid-weekdays { 
-    display: grid; 
-    grid-template-columns: repeat(7, 1fr); 
-    font-size: 0.6rem; 
-    font-weight: 800; 
-    color: var(--border); 
-    margin-bottom: 3px; 
-}
-
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.grid-container { background: var(--grid-bg); border-radius: 12px; border: 2px solid var(--border); margin-bottom: 12px; padding: 8px; }
+.grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 800; font-size: 0.85rem; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 
 .grid-day { 
     aspect-ratio: 1; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    font-size: 0.75rem; 
-    border-radius: 4px; 
+    font-size: 0.8rem; 
+    border-radius: 6px; 
     cursor: pointer; 
     border: 1px solid var(--border); 
-    color: var(--text); 
 }
+.grid-day.active { background: var(--accent); color: white; font-weight: 900; }
+.grid-day.is-holiday { border-color: var(--gold); background: rgba(241, 196, 15, 0.1); }
 
-.grid-day.active { background: var(--accent) !important; color: white !important; font-weight: 900; border-color: var(--accent); }
-
-.grid-day.is-holiday { 
-    background: rgba(241, 196, 15, 0.2); 
-    border-color: var(--gold); 
-    color: var(--gold); 
-    font-weight: bold; 
-    position: relative; 
-}
-.grid-day.is-holiday::after { content: "★"; position: absolute; top: -3px; right: 0px; font-size: 0.4rem; color: var(--gold); }
-
-.top-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 8px; }
+/* Buttons & Layout Controls */
+.top-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
 
 .display-area { 
-    min-height: 85px; 
-    background: rgba(0,0,0,0.05); 
-    border-radius: 10px; 
-    padding: 8px; 
-    margin-bottom: 8px; 
+    min-height: 100px; 
+    background: rgba(0,0,0,0.03); 
+    border-radius: 12px; 
+    padding: 10px; 
+    margin-bottom: 12px; 
     display: flex; 
     flex-direction: column; 
     justify-content: center; 
 }
-body.dark-mode .display-area { background: rgba(255,255,255,0.05); }
 
-.holiday-banner { color: var(--holiday); font-weight: 800; font-size: 0.65rem; margin-bottom: 2px; }
-.polish-display { font-size: 0.85rem; font-weight: 700; color: var(--accent); line-height: 1.2; }
+.polish-display { font-size: 0.9rem; font-weight: 700; color: var(--accent); margin: 4px 0; line-height: 1.3; }
+.phonetic-display { font-size: 0.75rem; font-style: italic; opacity: 0.8; color: var(--text); }
+.english-display { font-size: 0.75rem; color: var(--text); opacity: 0.7; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 4px; }
 
-/* New: Phonetic Display Area */
-.phonetic-display { 
-    font-size: 0.7rem; 
-    font-weight: 500; 
-    color: var(--text); 
-    opacity: 0.8; 
-    margin-top: 2px; 
-    font-style: italic; 
-}
-
-.english-display { font-size: 0.7rem; font-style: italic; color: var(--text); opacity: 0.7; margin-top: 2px; }
-
-.action-grid, .audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 5px; }
-
-/* Action Grid extension for Quiz button */
-.action-grid { grid-template-columns: 1fr 1fr 1fr; }
-
-button { cursor: pointer; border-radius: 8px; border: none; padding: 8px; font-weight: 700; width: 100%; font-size: 0.7rem;}
+button { cursor: pointer; border-radius: 8px; border: none; padding: 10px; font-weight: 700; font-size: 0.7rem; transition: transform 0.1s; }
+button:active { transform: scale(0.95); }
 .btn-main { background: var(--accent); color: white; }
-.btn-real { background: #007bff; color: white; }
 .btn-sub { background: var(--btn-sub); color: var(--text); }
 .btn-cult { background: var(--gold); color: white; }
 
-/* Restored: Culture Modal Styles */
+/* Modal Styling for Detailed Culture Notes */
 .modal { 
     display: none; 
     position: fixed; 
@@ -225,31 +137,10 @@ button { cursor: pointer; border-radius: 8px; border: none; padding: 8px; font-w
     width: 100%; height: 100%; 
     background: var(--card); 
     z-index: 2000; 
-    padding: 20px; 
+    padding: 25px; 
     box-sizing: border-box; 
     overflow-y: auto; 
-    color: var(--text); 
 }
-
-.modal-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 15px; 
-    border-bottom: 2px solid var(--accent); 
-    padding-bottom: 8px; 
-}
-
-.close-btn { background: var(--holiday); color: white; width: auto !important; padding: 5px 12px; }
-
-.cult-card { 
-    background: var(--btn-sub); 
-    padding: 12px; 
-    border-radius: 10px; 
-    margin-bottom: 10px; 
-    border-left: 5px solid var(--accent); 
-    text-align: left; 
-}
-.cult-card h3 { margin: 0; font-size: 0.9rem; color: var(--accent); }
-
-@media (max-height: 670px) { .container { transform: scale(0.95); transform-origin: center top; } }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+.cult-card { background: var(--btn-sub); padding: 20px; border-radius: 15px; border-left: 8px solid var(--accent); text-align: left; line-height: 1.5; }
+.cult-card h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }

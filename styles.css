@@ -11,7 +11,6 @@ body {
     font-family: -apple-system, system-ui, sans-serif;
     background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
     color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;
-    /* App-specific behavior */
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
@@ -51,6 +50,10 @@ body {
 body.dark-mode .display-area { background: rgba(255,255,255,0.05); }
 .holiday-banner { color: var(--holiday); font-weight: 800; font-size: 0.65rem; margin-bottom: 2px; }
 .polish-display { font-size: 0.85rem; font-weight: 700; color: var(--accent); line-height: 1.2; }
+
+/* New Phonetic Style */
+.phonetic-display { font-size: 0.7rem; font-weight: 500; color: var(--text); opacity: 0.8; margin-top: 2px; font-style: italic; }
+
 .english-display { font-size: 0.7rem; font-style: italic; color: var(--text); opacity: 0.7; margin-top: 2px; }
 
 .action-grid, .audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 5px; }

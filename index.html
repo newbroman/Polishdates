@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,7 +14,7 @@
     <link rel="apple-touch-icon" href="icon.png">
     
     <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css?v=2.7">
+    <link rel="stylesheet" href="styles.css?v=2.8">
 
     <script>
         window.addEventListener("load", function() {
@@ -25,7 +24,6 @@
         });
     </script>
 </head>
-
 <body onload="init()">
 <div class="container">
     <div class="app-header flag-bg">
@@ -59,13 +57,14 @@
     <div class="top-row">
         <button class="btn-sub" onclick="toggleDark()">🌓</button>
         <button class="btn-sub" onclick="toggleLang()">EN/PL</button>
-        <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
+        <button class="btn-sub" id="p-tog" onclick="togglePhonetics()">ABC: OFF</button>
         <button class="btn-cult" onclick="showCulture()"><span id="btn-cult-text">🏛️ Culture</span></button>
     </div>
 
     <div class="display-area">
         <div class="holiday-banner" id="hol-t"></div>
         <div class="polish-display" id="pol-t"></div>
+        <div class="phonetic-display" id="pho-t" style="display:none;"></div>
         <div class="english-display" id="eng-t"></div>
         <button id="rev-b" class="btn-main" style="display:none;" onclick="reveal()">REVEAL</button>
     </div>
@@ -88,6 +87,6 @@
     </div>
     <div id="cultContent"></div>
 </div>
-<script src="script.js?v=2.7"></script>
+<script src="script.js?v=2.8"></script>
 </body>
 </html>

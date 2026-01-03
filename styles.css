@@ -1,146 +1,101 @@
-/* Version 41.2 - Updated for Year Toggle and Sidebar Cleanup */
-
-:root { 
-    --bg: #e0e5ec; 
-    --card: #ffffff; 
-    --text: #2d3436; 
-    --accent: #00b894; 
-    --border: #b2bec3; 
-    --btn-sub: #dfe6e9; 
-    --holiday: #d63031; 
-    --gold: #f1c40f; 
-    --grid-bg: #ffffff;
+/* --- Base Variables & Layout --- */
+:root {
+  --bg-color: #121212;
+  --container-bg: #1e1e1e;
+  --text-primary: #ffffff;
+  --accent-color: #dc143c; /* Polish Crimson */
+  --border-color: #333333;
 }
 
-body.dark-mode { 
-    --bg: #1a1a1a; 
-    --card: #2d3436; 
-    --text: #dfe6e9; 
-    --border: #636e72; 
-    --btn-sub: #3d3d3d; 
-    --grid-bg: #2d3436;
+/* --- Seasonal Themes from cultural.js --- */
+body.winter { --accent-color: #0984e3; }
+body.spring { --accent-color: #27ae60; }
+body.summer { --accent-color: #f1c40f; }
+body.autumn { --accent-color: #d35400; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
-body { 
-    font-family: -apple-system, system-ui, sans-serif;
-    background: var(--bg) radial-gradient(circle at 50% 50%, rgba(0,184,148,0.1) 0%, transparent 80%);
-    color: var(--text); 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    min-height: 100vh; 
-    margin: 0;
-    touch-action: manipulation;
-    user-select: none;
-    overflow: hidden;
+/* --- Calendar Header & Grid --- */
+.calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
-.container { 
-    background: var(--card); 
-    padding: 15px; 
-    border-radius: 20px; 
-    width: 320px; 
-    text-align: center; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
-    border: 1px solid var(--border); 
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  padding: 15px;
+  background: var(--container-bg);
+  margin: 0 10px;
+  border-radius: 12px;
 }
 
-.flag-bg { 
-    background: linear-gradient(to bottom, #ffffff 50%, #dc3545 50%); 
-    border-radius: 10px; 
-    padding: 12px; 
-    border: 2px solid var(--border); 
-    margin-bottom: 12px; 
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-#main-title { font-size: 1.2rem; margin: 0; font-weight: 900; color: #333; }
-
-.main-layout { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
-
-/* Sidebar updated: No icon, centered text */
-.season-sidebar { 
-    background: var(--btn-sub); 
-    padding: 15px 5px; 
-    border-radius: 12px; 
-    width: 85px; 
-    color: var(--accent); 
-    border: 1px solid var(--border); 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-#s-emo { font-size: 2.2rem; margin-bottom: 5px; }
-#s-nam { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
-
-.calendar-card { 
-    width: 110px; 
-    height: 110px; 
-    background: var(--grid-bg); 
-    border-radius: 12px; 
-    border: 3px solid var(--border); 
-    overflow: hidden; 
-    display: flex; 
-    flex-direction: column; 
+.calendar-day.selected {
+  background: var(--accent-color);
+  color: white;
+  font-weight: bold;
 }
 
-.cal-header { height: 25px; background: var(--accent); color: white; line-height: 25px; font-weight: bold; font-size: 0.7rem; }
-.cal-header.is-holiday { background: var(--holiday); }
-.cal-body { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 900; }
-.cal-footer { height: 20px; font-size: 0.6rem; border-top: 1px solid var(--border); line-height: 20px; background: var(--btn-sub); font-weight: bold; }
-
-.grid-container { background: var(--grid-bg); border-radius: 12px; border: 2px solid var(--border); margin-bottom: 12px; padding: 8px; }
-.grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 800; font-size: 0.85rem; }
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-
-.grid-day { 
-    aspect-ratio: 1; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 0.8rem; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    border: 1px solid var(--border); 
-}
-.grid-day.active { background: var(--accent); color: white; font-weight: 900; }
-.grid-day.is-holiday { border-color: var(--gold); background: rgba(241, 196, 15, 0.1); }
-
-/* Buttons & Layout Controls */
-.top-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
-
-.display-area { 
-    min-height: 100px; 
-    background: rgba(0,0,0,0.03); 
-    border-radius: 12px; 
-    padding: 10px; 
-    margin-bottom: 12px; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
+.calendar-day.holiday {
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
 }
 
-.polish-display { font-size: 0.9rem; font-weight: 700; color: var(--accent); margin: 4px 0; line-height: 1.3; }
-.phonetic-display { font-size: 0.75rem; font-style: italic; opacity: 0.8; color: var(--text); }
-.english-display { font-size: 0.75rem; color: var(--text); opacity: 0.7; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 4px; }
-
-button { cursor: pointer; border-radius: 8px; border: none; padding: 10px; font-weight: 700; font-size: 0.7rem; transition: transform 0.1s; }
-button:active { transform: scale(0.95); }
-.btn-main { background: var(--accent); color: white; }
-.btn-sub { background: var(--btn-sub); color: var(--text); }
-.btn-cult { background: var(--gold); color: white; }
-
-/* Modal Styling for Detailed Culture Notes */
-.modal { 
-    display: none; 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background: var(--card); 
-    z-index: 2000; 
-    padding: 25px; 
-    box-sizing: border-box; 
-    overflow-y: auto; 
+/* --- Info Panel Styling --- */
+.info-panel {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
 }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
-.cult-card { background: var(--btn-sub); padding: 20px; border-radius: 15px; border-left: 8px solid var(--accent); text-align: left; line-height: 1.5; }
-.cult-card h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
+
+.phrase-pl { font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
+.phrase-phonetic { font-style: italic; opacity: 0.8; margin-bottom: 5px; color: #aaa; }
+.phrase-en { font-size: 1rem; opacity: 0.7; }
+
+/* --- Buttons & Nav --- */
+.controls { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+
+button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+button.main-cta { background: var(--accent-color); }
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  background: #181818;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-item { display: flex; flex-direction: column; align-items: center; opacity: 0.6; }
+.nav-item.active { opacity: 1; color: var(--accent-color); }

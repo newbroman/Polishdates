@@ -51,17 +51,19 @@ const yPHO = {
     2030: "dva TIH-shyon-tse tshi-DZYESS-tya"
 };
 
+const cultureData = [
+    { title: "Names of Months", text: "Unlike English, Polish month names are derived from nature. For example, 'Styczeń' (January) comes from 'stykać' (to meet/join), as the old year meets the new." },
+    { title: "The Genitive Case", text: "When saying dates in Polish, we use the genitive case of the month (e.g., 'stycznia' instead of 'styczeń'). This literally translates to 'the 1st OF January'." },
+    { title: "Naming Days (Imieniny)", text: "In Poland, 'Imieniny' is often more important than birthdays. Every day on the calendar is associated with specific names." },
+    { title: "Constitution Day", text: "May 3rd commemorates the Constitution of 1791, the first modern constitution in Europe." }
+];
+
 // --- CORE LOGIC ---
-function init() {
-    renderGrid();
-    updateDisplay();
-}
+function init() { renderGrid(); updateDisplay(); }
 
 function renderGrid() {
     const grid = document.getElementById('calendar-grid');
     grid.innerHTML = "";
-    
-    // Header Month follows Language
     const monthTitle = lang === 'PL' ? mNames.PL_NOM[currentM] : mNames.EN[currentM];
     document.getElementById('grid-month-yr').innerText = `${monthTitle} ${currentY}`;
     
@@ -75,11 +77,8 @@ function renderGrid() {
         let el = document.createElement('div');
         el.className = 'grid-day';
         el.innerText = d;
-        
-        // Mark Holidays on Grid
         if (holidays[`${currentM + 1}-${d}`]) el.classList.add('is-holiday');
         if (d === selD) el.classList.add('active');
-        
         el.onclick = () => { selD = d; renderGrid(); updateDisplay(); };
         grid.appendChild(el);
     }
@@ -89,22 +88,18 @@ function updateDisplay() {
     let dateObj = new Date(currentY, currentM, selD);
     let dw = dateObj.getDay();
     
-    // Update Calendar Card
     document.getElementById('cal-h').innerText = lang === 'PL' ? mNames.PL_NOM[currentM].toUpperCase() : mNames.EN[currentM].toUpperCase();
     document.getElementById('cal-b').innerText = selD < 10 ? "0" + selD : selD;
     document.getElementById('cal-f').innerText = lang === 'PL' ? dNames.PL[dw].toUpperCase() : dNames.EN[dw].toUpperCase();
     
-    // Season Logic
     let season = seasons[currentM];
     document.getElementById('s-emo').innerText = season.emo;
     document.getElementById('s-nam').innerText = season.namePL;
 
-    // Holiday Check
     const hol = holidays[`${currentM + 1}-${selD}`];
     document.getElementById('hol-t').innerText = hol ? `🎉 ${hol[lang]}` : "";
     document.getElementById('cal-h').className = hol ? "cal-header is-holiday" : "cal-header";
 
-    // Text Construction
     let polishFull = `${getOrdinalPL(selD)} ${mNames.PL[currentM]} ${currentY}`;
     let phoneticFull = `${getOrdinalPHO(selD)} ${mNames.PHO[currentM]} ${yPHO[currentY] || currentY}`;
     let englishFull = `${getOrdinalEN(selD)} of ${mNames.EN[currentM]}, ${currentY}`;
@@ -118,20 +113,14 @@ function updateDisplay() {
         document.getElementById('pol-t').innerText = polishFull;
         document.getElementById('eng-t').innerText = lang === 'EN' ? englishFull : "";
         document.getElementById('rev-b').style.display = "none";
-        
-        if (showPhonetics) {
-            document.getElementById('pho-t').innerText = phoneticFull;
-            document.getElementById('pho-t').style.display = "block";
-        } else {
-            document.getElementById('pho-t').style.display = "none";
-        }
+        document.getElementById('pho-t').style.display = showPhonetics ? "block" : "none";
+        if (showPhonetics) document.getElementById('pho-t').innerText = phoneticFull;
     }
 }
 
 // --- UTILITIES ---
 function getOrdinalPL(n) {
-    const ords = ["pierwszy", "drugi", "trzeci", "czwarty", "piąty", "szósty", "siódmy", "ósmy", "dziewiąty", "dziesiąty",
-    "jedenasty", "dwunasty", "trzynasty", "czternasty", "piętnasty", "szesnasty", "siedemnasty", "osiemnasty", "dziewiętnasty", "dwudziesty"];
+    const ords = ["pierwszy", "drugi", "trzeci", "czwarty", "piąty", "szósty", "siódmy", "ósmy", "dziewiąty", "dziesiąty", "jedenasty", "dwunasty", "trzynasty", "czternasty", "piętnasty", "szesnasty", "siedemnasty", "osiemnasty", "dziewiętnasty", "dwudziesty"];
     if (n <= 20) return ords[n-1];
     if (n === 30) return "trzydziesty";
     let tens = Math.floor(n/10) * 10;
@@ -141,20 +130,16 @@ function getOrdinalPL(n) {
 }
 
 function getOrdinalPHO(n) {
-    const p = ["PYERV-shi", "DROO-gi", "TSHE-chee", "CHVAR-ti", "PYOHN-ti", "SHOO-sti", "SHYED-mi", "OOSH-mi", "JEV-yonti", "dje-SHOHN-ti", 
-               "ye-den-ASS-ti", "dvoo-nass-ti", "tshi-nass-ti", "chter-nass-ti", "pyent-nass-ti", "shes-nass-ti", "syed-em-nass-ti", "osh-em-nass-ti", "jev-yent-nass-ti", "dvoo-DZYESS-ti"];
+    const p = ["PYERV-shi", "DROO-gi", "TSHE-chee", "CHVAR-ti", "PYOHN-ti", "SHOO-sti", "SHYED-mi", "OOSH-mi", "JEV-yonti", "dje-SHOHN-ti", "ye-den-ASS-ti", "dvoo-nass-ti", "tshi-nass-ti", "chter-nass-ti", "pyent-nass-ti", "shes-nass-ti", "syed-em-nass-ti", "osh-em-nass-ti", "jev-yent-nass-ti", "dvoo-DZYESS-ti"];
     if (n <= 20) return p[n-1];
     if (n === 30) return "tshi-DZYESS-ti";
     let prefix = Math.floor(n/10) === 2 ? "dvoo-DZYESS-ti " : "tshi-DZYESS-ti ";
     return prefix + (n % 10 > 0 ? p[(n % 10) - 1] : "");
 }
 
-function getOrdinalEN(n) {
-    let s = ["th","st","nd","rd"], v = n % 100;
-    return n + (s[(v-20)%10] || s[v] || s[0]);
-}
+function getOrdinalEN(n) { let s = ["th","st","nd","rd"], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
 
-// --- BUTTON ACTIONS ---
+// --- ACTIONS ---
 function toggleLang() { lang = (lang === 'PL') ? 'EN' : 'PL'; renderGrid(); updateDisplay(); }
 function togglePhonetics() { showPhonetics = !showPhonetics; document.getElementById('p-tog').innerText = showPhonetics ? "ABC: ON" : "ABC: OFF"; updateDisplay(); }
 function toggleQuiz() { quizMode = !quizMode; document.getElementById('q-tog').innerText = quizMode ? "Quiz: ON" : "Quiz: OFF"; updateDisplay(); }
@@ -163,18 +148,25 @@ function adjM(dir) { currentM += dir; if(currentM>11){currentM=0;currentY++} if(
 function setToday() { let t = new Date(); currentM = t.getMonth(); currentY = t.getFullYear(); selD = t.getDate(); renderGrid(); updateDisplay(); }
 function roll() { currentM = Math.floor(Math.random()*12); selD = Math.floor(Math.random()*28)+1; renderGrid(); updateDisplay(); }
 function reveal() { quizMode = false; updateDisplay(); quizMode = true; document.getElementById('rev-b').style.display = "none"; }
-
+function showCulture() {
+    const modal = document.getElementById('cultModal');
+    const content = document.getElementById('cultContent');
+    content.innerHTML = "";
+    cultureData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'cult-card';
+        card.innerHTML = `<h3>${item.title}</h3><p>${item.text}</p>`;
+        content.appendChild(card);
+    });
+    modal.style.display = "block";
+}
+function closeCulture() { document.getElementById('cultModal').style.display = "none"; }
 function speak(rate = 1) {
     const text = `${getOrdinalPL(selD)} ${mNames.PL[currentM]} ${currentY}`;
     let ut = new SpeechSynthesisUtterance(text);
-    ut.lang = 'pl-PL';
-    ut.rate = rate;
-    window.speechSynthesis.speak(ut);
+    ut.lang = 'pl-PL'; ut.rate = rate; window.speechSynthesis.speak(ut);
 }
 
-// Service Worker Registration
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
+    window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
 }

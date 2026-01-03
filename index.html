@@ -14,11 +14,13 @@
     <link rel="apple-touch-icon" href="icon.png">
     
     <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="styles.css?v=2.91">
+    <link rel="stylesheet" href="styles.css?v=3.1">
 
     <script>
         window.addEventListener("load", function() {
-            setTimeout(function(){ window.scrollTo(0, 1); }, 0);
+            setTimeout(function(){
+                window.scrollTo(0, 1);
+            }, 0);
         });
     </script>
 </head>
@@ -70,6 +72,7 @@
     <div class="action-grid">
         <button class="btn-real" id="btn-actual" onclick="setToday()">TODAY</button>
         <button class="btn-main" id="btn-random" onclick="roll()">RANDOM</button>
+        <button class="btn-sub" id="q-tog" onclick="toggleQuiz()">Quiz: OFF</button>
     </div>
     
     <div class="audio-grid">
@@ -85,6 +88,7 @@
     </div>
     <div id="cultContent"></div>
 </div>
-<script src="script.js?v=2.91"></script>
+
+<script src="script.js?v=3.1"></script>
 </body>
 </html>

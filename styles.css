@@ -19,7 +19,7 @@ body {
 .container { background: var(--card); padding: 10px; border-radius: 20px; width: 300px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid var(--border); }
 
 .flag-bg { background: linear-gradient(to bottom, #ffffff 50%, #dc3545 50%); border-radius: 10px; padding: 6px; border: 2px solid var(--border); margin-bottom: 8px; }
-#main-title { font-size: 0.85rem; margin: 0; font-weight: 900; color: #333; text-shadow: 0.5px 0.5px 0px white; }
+#main-title { font-size: 1.2rem; margin: 0; font-weight: 900; color: #333; text-shadow: 0.5px 0.5px 0px white; }
 
 .main-layout { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; }
 
